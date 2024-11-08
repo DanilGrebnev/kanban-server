@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import express from "express"
+import cors from "cors"
 
 const expressApp = express()
 
@@ -8,6 +9,9 @@ export class CreateExpressApp {
         this.port = port
         this.app = expressApp
         this.app.use(express.json())
+        this.app.use(
+            cors({ origin: "*", methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }),
+        )
     }
 
     use = (...middleware) => {
