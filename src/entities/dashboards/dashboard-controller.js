@@ -32,6 +32,7 @@ router.post("/", async (req, res) => {
         const response = await dashboardServices.createDashboard(req.body)
         return res.send(response)
     } catch (err) {
+        console.log(err)
         res.status(400).send(Responses.message("Ошибка создания доски"))
     }
 })

@@ -1,5 +1,6 @@
 import { DashboardModel } from "./dashboard-schema.js"
 import { UsersModel } from "../users/users-schema.js"
+import { usersRole } from "../users/model/usersRole.js"
 
 class DashboardServices {
     getDashboardsList = async () => {
@@ -9,14 +10,23 @@ class DashboardServices {
     createDashboard = async (body) => {
         const dashboard = new DashboardModel()
         dashboard.dashboardName = body.dashboardName
-        dashboard.ownersId.push(body.ownerId)
+        dashboard.participants.push(body.userId)
 
         const [fondedUser, createdDashboard] = await Promise.all([
-            UsersModel.findById(body.ownerId).exec(),
+            UsersModel.findById(body.userId).exec(),
             dashboard.save(),
         ])
 
-        fondedUser.dashboardsIdList.push(createdDashboard._id)
+        if (!fondedUser) {
+            DashboardModel.findByIdAndDelete(createdDashboard._id)
+            throw new Error("Пользователь не найден")
+        }
+
+        fondedUser.dashboardsList.push({
+            dashboardId: createdDashboard._id,
+            dashboardName: createdDashboard.dashboardName,
+            role: usersRole.owner,
+        })
         await fondedUser.save()
 
         return createdDashboard

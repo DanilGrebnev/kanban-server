@@ -10,6 +10,7 @@ const ToDoSchema = new Schema(
             type: Date,
             default: Date.now(),
         },
+        author: String,
         history: {
             type: [
                 {

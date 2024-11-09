@@ -3,8 +3,7 @@ import { Schema, model } from "mongoose"
 const DashboardsSchema = new Schema(
     {
         dashboardName: String,
-        participants: { type: Number, default: 1 },
-        ownersId: { type: [String], default: [] },
+        participants: { type: [String], default: [] },
     },
     {
         versionKey: false,

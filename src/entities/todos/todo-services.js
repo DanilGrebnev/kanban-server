@@ -1,8 +1,15 @@
 import { ToDoModel } from "./todo-schema.js"
+import { UsersModel } from "../users/users-schema.js"
 
 class ToDoServices {
     createTodo = async (data) => {
-        const todo = new ToDoModel(data)
+        const { authorId, ...otherData } = data
+
+        const user = await UsersModel.findById(authorId).exec()
+
+        const todo = new ToDoModel(otherData)
+        todo.author = user.name
+
         return await todo.save()
     }
 

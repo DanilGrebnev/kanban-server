@@ -1,17 +1,17 @@
 import { Schema, model } from "mongoose"
 
+const UserRole = "owner" || "employee"
+
 const UsersSchema = new Schema(
     {
         name: String,
         password: String,
         login: String,
-        dashboardsIdList: {
-            type: [String],
+        dashboardsList: {
+            type: [
+                { dashboardId: String, dashboardName: String, role: String },
+            ],
             default: [],
-        },
-        role: {
-            type: String,
-            default: "employee",
         },
     },
     {
