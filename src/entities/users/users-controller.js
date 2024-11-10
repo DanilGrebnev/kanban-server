@@ -50,6 +50,18 @@ router.post("/join", async (req, res) => {
     }
 })
 
+router.get("/participants/:dashboardId", async (req, res) => {
+    try {
+        const users = await userServices.getDashboardParticipants(
+            req.params.dashboardId,
+        )
+
+        res.send(users)
+    } catch (err) {
+        res.send({ err })
+    }
+})
+
 router.post("/login", async (req, res) => {
     try {
         const jwtUserId = await userServices.login(req.body)

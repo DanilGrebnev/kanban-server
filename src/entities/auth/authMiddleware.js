@@ -9,6 +9,6 @@ export const authMiddleware = async (req, res, next) => {
 
         next()
     } catch (err) {
-        res.status(404).send(Responses.message("Not authorization"))
+        res.status(401).send(Responses.message("Not authorization"))
     }
 }

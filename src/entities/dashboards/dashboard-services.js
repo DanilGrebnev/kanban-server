@@ -4,7 +4,6 @@ import { usersRole } from "../users/model/usersRole.js"
 
 class DashboardServices {
     getDashboardsList = async (userId) => {
-        console.log(userId)
         return await DashboardModel.find({ participants: { $in: userId } })
     }
 

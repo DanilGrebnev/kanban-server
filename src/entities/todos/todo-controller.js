@@ -17,7 +17,7 @@ router.get("/:columnId", async (req, res) => {
 })
 
 /* Create todos */
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
     try {
         const payload = await parseJwtPayload(req.cookies?.auth)
 
@@ -43,7 +43,7 @@ router.post("/move-todo", authMiddleware, async (req, res) => {
             .send(Responses.message("Ошибка перемещения задачи"))
     }
 })
-
+/**/
 router.delete("/", authMiddleware, async (req, res) => {
     try {
         const response = await toDoServices.deleteTodo(req.body.todoId)

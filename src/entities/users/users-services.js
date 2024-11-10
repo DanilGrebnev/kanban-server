@@ -124,6 +124,12 @@ class UserServices {
         if (!user) throw new Error("Пользователь не найден")
         return user
     }
+
+    getDashboardParticipants = async (dsahboardId) => {
+        return await UsersModel.find({
+            "dashboardsList.dashboardId": dsahboardId,
+        })
+    }
 }
 
 export const userServices = new UserServices()
