@@ -1,17 +1,19 @@
 import mongoose from "mongoose"
 import express from "express"
 import cors from "cors"
-
+import cookieParser from "cookie-parser"
+import { consts } from "../shared/consts.js"
+import "dotenv/config"
 const expressApp = express()
 
 export class CreateExpressApp {
-    constructor({ port }) {
+    constructor({ port, corsOptions }) {
         this.port = port
         this.app = expressApp
-        this.app.use(express.json())
-        this.app.use(
-            cors({ origin: "*", methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }),
-        )
+        this.app
+            .use(cors(corsOptions))
+            .use(express.json())
+            .use(cookieParser(consts.COOKIE_KEY))
     }
 
     use = (...middleware) => {

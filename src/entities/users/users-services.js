@@ -1,10 +1,21 @@
 import { UsersModel } from "./users-schema.js"
 import { DashboardModel } from "../dashboards/dashboard-schema.js"
 import { usersRole } from "./model/usersRole.js"
+import { asyncBcryptHash } from "../../lib/asyncBcryptHash.js"
+import { asyncBcryptCompare } from "../../lib/asyncBcryptCompare.js"
+import jwt from "jsonwebtoken"
+import { consts } from "../../shared/consts.js"
+import { parseJwtPayload } from "../../lib/parseJwtPayload.js"
 
 class UserServices {
     create = async (body) => {
-        const user = new UsersModel(body)
+        const hashPassword = await asyncBcryptHash({
+            payload: body.password,
+            salt: 7,
+        })
+
+        const user = new UsersModel({ ...body, password: hashPassword })
+
         return await user.save()
     }
 
@@ -61,10 +72,34 @@ class UserServices {
     }
 
     login = async (body) => {
-        const user = await UsersModel.findOne(body).exec()
+        const user = await UsersModel.findOne({ login: body.login }).exec()
+
         if (!user) {
-            throw new Error("Ошибка авторизации")
+            throw new Error("Неправильный логин или пароль")
         }
+
+        const comparePassword = await asyncBcryptCompare({
+            payload: body.password,
+            hash: user.password,
+        })
+
+        if (!comparePassword) {
+            throw new Error("Неправильный логин или пароль")
+        }
+        const jwtId = await jwt.sign(
+            { userId: user._id.toString() },
+            consts.JWT_SECRET,
+        )
+
+        return jwtId
+    }
+
+    getProfile = async (authData) => {
+        if (!authData) throw new Error("Ошибка получения профиля")
+        const jwtPayload = await parseJwtPayload(authData)
+
+        const user = await UsersModel.findById(jwtPayload.userId)
+        if (!user) throw new Error("Пользователь не найден")
         return user
     }
 }

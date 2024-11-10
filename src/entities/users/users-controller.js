@@ -25,15 +25,21 @@ router.post("/join", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
-        const response = await userServices.login(req.body)
-        return res.status(200).send(response)
+        const jwtUserId = await userServices.login(req.body)
+
+        return res
+            .cookie("auth", jwtUserId, {
+                httpOnly: true,
+            })
+            .status(200)
+            .send(Responses.message("Авторизация успешна"))
     } catch (err) {
         console.log(err)
-        return res.send(Responses.message(`Ошибка авторизации`))
+        return res.status(401).send(Responses.message(err?.message))
     }
 })
 
-router.post("/remove", async (req, res) => {
+router.delete("/remove", async (req, res) => {
     try {
         const response = await userServices.deleteFromDashboard(req.body)
         return res.status(200).send(response)
@@ -42,6 +48,15 @@ router.post("/remove", async (req, res) => {
         return res.send(
             Responses.message(`Ошибка удаления пользователя из доски, ${err}`),
         )
+    }
+})
+
+router.get("/profile", async (req, res) => {
+    try {
+        const user = await userServices.getProfile(req.cookies.auth)
+        return res.status(200).send(user)
+    } catch (err) {
+        res.status(401).send(Responses.message(err))
     }
 })
 

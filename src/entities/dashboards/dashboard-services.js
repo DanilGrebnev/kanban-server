@@ -7,13 +7,13 @@ class DashboardServices {
         return await DashboardModel.find()
     }
 
-    createDashboard = async (body) => {
+    createDashboard = async (data) => {
         const dashboard = new DashboardModel()
-        dashboard.dashboardName = body.dashboardName
-        dashboard.participants.push(body.userId)
+        dashboard.dashboardName = data.dashboardName
+        dashboard.participants.push(data.userId)
 
         const [fondedUser, createdDashboard] = await Promise.all([
-            UsersModel.findById(body.userId).exec(),
+            UsersModel.findById(data.userId).exec(),
             dashboard.save(),
         ])
 
