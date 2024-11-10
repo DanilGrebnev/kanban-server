@@ -1,14 +1,41 @@
 import { Router } from "express"
 import { userServices } from "./users-services.js"
 import { Responses } from "../../shared/response.js"
+import { createAuthJwtPayload } from "../../lib/createAuthJwtPayload.js"
 
 const router = Router()
 
 router.post("/registration", async (req, res) => {
     try {
         const user = await userServices.create(req.body)
-        return res.status(200).send(user)
-    } catch (err) {}
+
+        const jwtUserId = await createAuthJwtPayload(user._id.toString())
+
+        return res
+            .cookie("auth", jwtUserId, {
+                httpOnly: true,
+            })
+            .status(200)
+            .send(Responses.message("Регистрация успешна", user))
+    } catch (err) {
+        return res
+            .status(400)
+            .send(Responses.message(`Ошибка регистрации. ${err?.message}`))
+    }
+})
+
+router.get("/search", async (req, res) => {
+    try {
+        const fondedUsers = await userServices.findUser(req.query.name)
+
+        return res.status(200).send(fondedUsers)
+    } catch (err) {
+        return res
+            .status(400)
+            .send(
+                Responses.message("Ошибка полиска пользователя", err?.message),
+            )
+    }
 })
 
 router.post("/join", async (req, res) => {

@@ -3,8 +3,9 @@ import { UsersModel } from "../users/users-schema.js"
 import { usersRole } from "../users/model/usersRole.js"
 
 class DashboardServices {
-    getDashboardsList = async () => {
-        return await DashboardModel.find()
+    getDashboardsList = async (userId) => {
+        console.log(userId)
+        return await DashboardModel.find({ participants: { $in: userId } })
     }
 
     createDashboard = async (data) => {

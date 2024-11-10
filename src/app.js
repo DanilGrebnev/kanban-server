@@ -3,7 +3,6 @@ import { CreateExpressApp } from "./lib/createExpressApp.js"
 import { usersController } from "./entities/users/users-controller.js"
 import { columnsController } from "./entities/columns/columns-controller.js"
 import { todoController } from "./entities/todos/todo-controller.js"
-import { authMiddleware } from "./entities/auth/authMiddleware.js"
 
 import "dotenv/config"
 

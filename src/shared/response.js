@@ -3,7 +3,10 @@ class Response {
         return { status, message }
     }
 
-    message(message) {
+    message(message, data) {
+        if (data) {
+            return { message, data }
+        }
         return { message }
     }
 

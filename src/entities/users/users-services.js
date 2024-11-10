@@ -3,31 +3,55 @@ import { DashboardModel } from "../dashboards/dashboard-schema.js"
 import { usersRole } from "./model/usersRole.js"
 import { asyncBcryptHash } from "../../lib/asyncBcryptHash.js"
 import { asyncBcryptCompare } from "../../lib/asyncBcryptCompare.js"
-import jwt from "jsonwebtoken"
-import { consts } from "../../shared/consts.js"
 import { parseJwtPayload } from "../../lib/parseJwtPayload.js"
+import { createAuthJwtPayload } from "../../lib/createAuthJwtPayload.js"
 
 class UserServices {
-    create = async (body) => {
+    create = async (data) => {
+        const fondedUserByNamePromise = UsersModel.findOne({ name: data.name })
+        const fondedUserByLoginPromise = UsersModel.findOne({
+            login: data.login,
+        })
+        const [fondedUserByName, fondedUserByLogin] = await Promise.all([
+            fondedUserByNamePromise,
+            fondedUserByLoginPromise,
+        ])
+
+        if (fondedUserByName) throw new Error("Имя пользователя уже занято")
+        if (fondedUserByLogin) throw new Error("Логин уже занят")
+
         const hashPassword = await asyncBcryptHash({
-            payload: body.password,
+            payload: data.password,
             salt: 7,
         })
 
-        const user = new UsersModel({ ...body, password: hashPassword })
+        const user = new UsersModel({ ...data, password: hashPassword })
 
         return await user.save()
     }
 
+    findUser = async (userName) => {
+        const nameRegex = new RegExp(userName)
+
+        if (userName === "") return []
+
+        return await UsersModel.find({
+            name: { $regex: nameRegex, $options: "i" },
+        })
+    }
+
     /* Присоединить пользователя к доске */
     joinToDashboard = async ({ dashboardId, userId }) => {
-        const [user, dashboard] = Promise.all([
+        const [user, dashboard] = await Promise.all([
             UsersModel.findById(userId),
             DashboardModel.findById(dashboardId),
         ])
 
         if (!user) {
-            throw new Error("Пользователь не найден или не существует.")
+            throw new Error("Пользователь не существует.")
+        }
+        if (!dashboard) {
+            throw new Error("Доска не найдена")
         }
 
         user.dashboardsList.push({
@@ -86,10 +110,8 @@ class UserServices {
         if (!comparePassword) {
             throw new Error("Неправильный логин или пароль")
         }
-        const jwtId = await jwt.sign(
-            { userId: user._id.toString() },
-            consts.JWT_SECRET,
-        )
+
+        const jwtId = createAuthJwtPayload(user._id.toString())
 
         return jwtId
     }

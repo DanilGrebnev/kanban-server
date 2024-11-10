@@ -10,6 +10,11 @@ const ToDoSchema = new Schema(
             type: Date,
             default: Date.now(),
         },
+        /* variants: 'low' | 'middle' | 'high' */
+        priority: {
+            type: String,
+            default: "low",
+        },
         author: String,
         history: {
             type: [
