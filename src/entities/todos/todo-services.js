@@ -14,7 +14,7 @@ class ToDoServices {
     }
 
     getTodos = async (columnId) => {
-        return ToDoModel.find({ columnId })
+        return ToDoModel.find({ columnId }).sort({ _id: -1 })
     }
 
     getTodoDetail = async (todoId) => {

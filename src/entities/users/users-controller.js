@@ -2,6 +2,7 @@ import { Router } from "express"
 import { userServices } from "./users-services.js"
 import { Responses } from "../../shared/response.js"
 import { createAuthJwtPayload } from "../../lib/createAuthJwtPayload.js"
+import { authMiddleware } from "../auth/authMiddleware.js"
 
 const router = Router()
 
@@ -78,15 +79,19 @@ router.post("/login", async (req, res) => {
     }
 })
 
-router.delete("/remove", async (req, res) => {
+router.delete("/remove-from-dashboard", authMiddleware, async (req, res) => {
     try {
         const response = await userServices.deleteFromDashboard(req.body)
         return res.status(200).send(response)
     } catch (err) {
         console.log(err)
-        return res.send(
-            Responses.message(`Ошибка удаления пользователя из доски, ${err}`),
-        )
+        return res
+            .status(400)
+            .send(
+                Responses.message(
+                    `Ошибка удаления пользователя из доски, ${err?.message}`,
+                ),
+            )
     }
 })
 

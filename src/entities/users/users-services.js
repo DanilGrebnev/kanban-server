@@ -33,7 +33,7 @@ class UserServices {
     findUser = async (userName) => {
         const nameRegex = new RegExp(userName)
 
-        if (userName === "") return []
+        if (!userName) return []
 
         return await UsersModel.find({
             name: { $regex: nameRegex, $options: "i" },
@@ -76,7 +76,7 @@ class UserServices {
         if (!user) {
             throw new Error("Пользователь не найден или не существует.")
         }
-        if (dashboard) {
+        if (!dashboard) {
             throw new Error("Доска не найдена или не существует.")
         }
 
@@ -90,7 +90,7 @@ class UserServices {
             (participantsId) => participantsId !== userId,
         )
 
-        const [updatedUser] = Promise.all([user.save(), dashboard.save()])
+        const [updatedUser] = await Promise.all([user.save(), dashboard.save()])
 
         return updatedUser
     }
@@ -111,7 +111,7 @@ class UserServices {
             throw new Error("Неправильный логин или пароль")
         }
 
-        const jwtId = createAuthJwtPayload(user._id.toString())
+        const jwtId = await createAuthJwtPayload(user._id.toString())
 
         return jwtId
     }
