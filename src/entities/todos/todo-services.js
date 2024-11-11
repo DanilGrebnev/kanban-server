@@ -17,6 +17,10 @@ class ToDoServices {
         return ToDoModel.find({ columnId })
     }
 
+    getTodoDetail = async (todoId) => {
+        return await ToDoModel.findById(todoId)
+    }
+
     deleteTodo = async (todoId) => {
         return await ToDoModel.findByIdAndDelete({ _id: todoId })
     }

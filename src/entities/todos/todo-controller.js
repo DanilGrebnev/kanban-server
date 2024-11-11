@@ -16,6 +16,17 @@ router.get("/:columnId", async (req, res) => {
     }
 })
 
+router.get("/detail/:todoId", async (req, res) => {
+    try {
+        const todo = await toDoServices.getTodoDetail(req.params.todoId)
+        return res.status(200).send(todo)
+    } catch (err) {
+        return res
+            .status(400)
+            .send(Responses.message("Ошибка получения задачи"))
+    }
+})
+
 /* Create todos */
 router.post("/", authMiddleware, async (req, res) => {
     try {
