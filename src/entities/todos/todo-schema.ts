@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose"
+import { ITodoSchema } from "./model/todoTypes"
 
-const ToDoSchema = new Schema(
+const ToDoSchema = new Schema<ITodoSchema>(
     {
         /* Заголовок задачи */
         todo: String,
@@ -10,7 +11,6 @@ const ToDoSchema = new Schema(
             type: Date,
             default: Date.now(),
         },
-        /* variants: 'low' | 'middle' | 'high' */
         priority: {
             type: String,
             default: "low",

@@ -5,9 +5,11 @@ export interface JWTPayloadDecode {
     userId: string
 }
 
-export const parseJwtPayload = (jwtPayload: string) => {
+export const parseJwtPayload = (
+    jwtPayload: string,
+): JWTPayloadDecode | undefined => {
     try {
-        return jwt.verify(jwtPayload, consts.JWT_SECRET)
+        return jwt.verify(jwtPayload, consts.JWT_SECRET) as JWTPayloadDecode
     } catch (err) {
         return
     }

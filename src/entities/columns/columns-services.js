@@ -1,5 +1,5 @@
 import { ColumnsModel } from "./columns-schema.js"
-import { ToDoModel } from "../todos/todo-schema.js"
+import { ToDoModel } from "@/entities/todos"
 
 class ColumnsServices {
     /* Получение всех колонок доски */

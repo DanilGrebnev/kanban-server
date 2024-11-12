@@ -1,15 +1,12 @@
-import { ToDoModel } from "./todo-schema.js"
+import { ToDoModel } from "./todo-schema"
 import { UsersModel } from "@/entities/users"
 
 class ToDoServices {
     createTodo = async (data) => {
         const { authorId, ...otherData } = data
-
         const user = await UsersModel.findById(authorId).exec()
-
         const todo = new ToDoModel(otherData)
         todo.author = user.name
-
         return await todo.save()
     }
 
