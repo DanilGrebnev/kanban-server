@@ -1,13 +1,13 @@
 import { DashboardModel } from "./dashboard-schema.js"
-import { UsersModel } from "../users/users-schema.js"
-import { usersRole } from "../users/model/usersRole.js"
+import { UsersModel, UsersRole } from "@/entities/users"
+import { ICreateDashboard } from "@/entities/dashboards/model/dashboardTypes"
 
 class DashboardServices {
-    getDashboardsList = async (userId) => {
-        return await DashboardModel.find({ participants: { $in: userId } })
+    getDashboardsList = async (userId: string) => {
+        return DashboardModel.find({ participants: { $in: userId } })
     }
 
-    createDashboard = async (data) => {
+    createDashboard = async (data: ICreateDashboard) => {
         const dashboard = new DashboardModel()
         dashboard.dashboardName = data.dashboardName
         dashboard.participants.push(data.userId)
@@ -23,16 +23,16 @@ class DashboardServices {
         }
 
         fondedUser.dashboardsList.push({
-            dashboardId: createdDashboard._id,
+            dashboardId: createdDashboard._id.toString(),
             dashboardName: createdDashboard.dashboardName,
-            role: usersRole.owner,
+            role: UsersRole.OWNER,
         })
         await fondedUser.save()
 
         return createdDashboard
     }
 
-    getDashboardDetail = async (dashboardId) => {
+    getDashboardDetail = async (dashboardId: string) => {
         return await DashboardModel.findById(dashboardId).exec()
     }
 }

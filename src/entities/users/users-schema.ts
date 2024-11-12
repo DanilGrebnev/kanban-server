@@ -1,8 +1,7 @@
 import { Schema, model } from "mongoose"
+import { IProfile } from "@/entities/users/model/usersTypes"
 
-const UserRole = "owner" || "employee"
-
-const UsersSchema = new Schema(
+const UsersSchema = new Schema<IProfile>(
     {
         name: String,
         password: String,

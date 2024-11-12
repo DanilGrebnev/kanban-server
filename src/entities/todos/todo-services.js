@@ -1,5 +1,5 @@
 import { ToDoModel } from "./todo-schema.js"
-import { UsersModel } from "../users/users-schema.js"
+import { UsersModel } from "@/entities/users"
 
 class ToDoServices {
     createTodo = async (data) => {

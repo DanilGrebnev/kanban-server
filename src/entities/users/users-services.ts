@@ -1,17 +1,18 @@
 import { UsersModel } from "./users-schema.js"
-import { DashboardModel } from "../dashboards/dashboard-schema.js"
-import { usersRole } from "./model/usersRole.js"
-import { asyncBcryptHash } from "../../lib/asyncBcryptHash.js"
-import { asyncBcryptCompare } from "../../lib/asyncBcryptCompare.js"
-import { parseJwtPayload } from "../../lib/parseJwtPayload.js"
-import { createAuthJwtPayload } from "../../lib/createAuthJwtPayload.js"
+import { DashboardModel } from "@/entities/dashboards"
+import { UsersRole, IRegister } from "./model/usersTypes"
+import { asyncBcryptHash } from "@/lib/asyncBcryptHash.js"
+import { asyncBcryptCompare } from "@/lib/asyncBcryptCompare.js"
+import { JWTPayloadDecode, parseJwtPayload } from "@/lib/parseJwtPayload.js"
+import { createAuthJwtPayload } from "@/lib/createAuthJwtPayload.js"
 
 class UserServices {
-    create = async (data) => {
+    create = async (data: IRegister) => {
         const fondedUserByNamePromise = UsersModel.findOne({ name: data.name })
         const fondedUserByLoginPromise = UsersModel.findOne({
             login: data.login,
         })
+
         const [fondedUserByName, fondedUserByLogin] = await Promise.all([
             fondedUserByNamePromise,
             fondedUserByLoginPromise,
@@ -30,18 +31,24 @@ class UserServices {
         return await user.save()
     }
 
-    findUser = async (userName) => {
+    findUser = async (userName: string) => {
         const nameRegex = new RegExp(userName)
 
         if (!userName) return []
 
-        return await UsersModel.find({
+        return UsersModel.find({
             name: { $regex: nameRegex, $options: "i" },
         })
     }
 
     /* Присоединить пользователя к доске */
-    joinToDashboard = async ({ dashboardId, userId }) => {
+    joinToDashboard = async ({
+        dashboardId,
+        userId,
+    }: {
+        dashboardId: string
+        userId: string
+    }) => {
         const [user, dashboard] = await Promise.all([
             UsersModel.findById(userId),
             DashboardModel.findById(dashboardId),
@@ -57,7 +64,7 @@ class UserServices {
         user.dashboardsList.push({
             dashboardId,
             dashboardName: dashboard.dashboardName,
-            role: usersRole.employee,
+            role: UsersRole.EMPLOYEE,
         })
 
         // Добавляем в доску id приглашённого
@@ -67,7 +74,13 @@ class UserServices {
         return await user.save()
     }
 
-    deleteFromDashboard = async ({ dashboardId, userId }) => {
+    deleteFromDashboard = async ({
+        dashboardId,
+        userId,
+    }: {
+        dashboardId: string
+        userId: string
+    }) => {
         const [user, dashboard] = await Promise.all([
             UsersModel.findById(userId),
             DashboardModel.findById(dashboardId),
@@ -116,18 +129,20 @@ class UserServices {
         return jwtId
     }
 
-    getProfile = async (authData) => {
+    getProfile = async (authData: string) => {
         if (!authData) throw new Error("Ошибка получения профиля")
-        const jwtPayload = await parseJwtPayload(authData)
+        const jwtPayload = parseJwtPayload(authData)
 
-        const user = await UsersModel.findById(jwtPayload.userId)
+        const user = await UsersModel.findById(
+            (<JWTPayloadDecode>jwtPayload).userId,
+        )
         if (!user) throw new Error("Пользователь не найден")
         return user
     }
 
-    getDashboardParticipants = async (dsahboardId) => {
-        return await UsersModel.find({
-            "dashboardsList.dashboardId": dsahboardId,
+    getDashboardParticipants = (dashboardId: string) => {
+        return UsersModel.find({
+            "dashboardsList.dashboardId": dashboardId,
         })
     }
 }

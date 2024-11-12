@@ -1,6 +1,7 @@
-import { dashboardController } from "./entities/dashboards/dashboard-controller.js"
+import "module-alias/register"
+import { dashboardController } from "@/entities/dashboards"
 import { CreateExpressApp } from "./lib/createExpressApp.js"
-import { usersController } from "./entities/users/users-controller.js"
+import { usersController } from "@/entities/users"
 import { columnsController } from "./entities/columns/columns-controller.js"
 import { todoController } from "./entities/todos/todo-controller.js"
 

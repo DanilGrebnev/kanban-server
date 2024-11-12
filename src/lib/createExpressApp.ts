@@ -2,11 +2,14 @@ import mongoose from "mongoose"
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
-import { consts } from "../shared/consts.js"
+import { consts } from "@/shared/consts.js"
 import "dotenv/config"
+import { Express } from "express"
 const expressApp = express()
 
 export class CreateExpressApp {
+    app: Express
+    port: number
     constructor({ port, corsOptions }) {
         this.port = port
         this.app = expressApp
@@ -32,8 +35,7 @@ export class CreateExpressApp {
             return this
         }
     }
-
-    create = (cb) => {
+    create = (cb?: (...args: any[]) => any) => {
         try {
             this.app.listen(this.port, cb?.())
             console.log("Application start on port " + this.port)

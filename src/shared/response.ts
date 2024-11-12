@@ -1,9 +1,9 @@
 class Response {
-    createResponse = (status, message) => {
+    createResponse = (status: number, message: string) => {
         return { status, message }
     }
 
-    message(message, data) {
+    message(message: string, data?: Record<string, any> | string | number) {
         if (data) {
             return { message, data }
         }
