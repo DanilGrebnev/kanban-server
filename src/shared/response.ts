@@ -1,5 +1,5 @@
 class Response {
-    createResponse = (status: number, message: string) => {
+    private createResponse = (status: number, message: string) => {
         return { status, message }
     }
 

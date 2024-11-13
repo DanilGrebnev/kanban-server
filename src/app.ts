@@ -1,9 +1,10 @@
 import "module-alias/register"
 import { dashboardController } from "@/entities/dashboards"
-import { CreateExpressApp } from "./lib/createExpressApp"
+import { CreateExpressApp } from "@/lib/createExpressApp"
 import { usersController } from "@/entities/users"
-import { columnsController } from "./entities/columns/columns-controller"
-import { todoController } from "./entities/todos/todo-controller"
+import { columnsController } from "@/entities/columns"
+import { todoController } from "@/entities/todos"
+import { commentsController } from "@/entities/comments"
 
 import "dotenv/config"
 
@@ -22,5 +23,6 @@ app.use("/users", usersController)
     .use("/dashboards", dashboardController)
     .use("/columns", columnsController)
     .use("/todos", todoController)
+    .use("/comments", commentsController)
     .create()
     .connectToMongoDB({ uri })
