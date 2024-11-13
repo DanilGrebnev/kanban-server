@@ -1,7 +1,20 @@
 import { Schema, model } from "mongoose"
-import { ITodoSchema } from "./model/todoTypes"
 
-const ToDoSchema = new Schema<ITodoSchema>(
+interface IToDoSchema {
+    todo: string
+    description: string
+    columnId: string
+    creationDate: Date
+    priority: "low" | "middle" | "high"
+    author: string
+    history: {
+        authorName: string
+        changeDate: Date
+        authorId: string
+    }[]
+}
+
+const ToDoSchema = new Schema<IToDoSchema>(
     {
         /* Заголовок задачи */
         todo: String,
@@ -31,5 +44,18 @@ const ToDoSchema = new Schema<ITodoSchema>(
         versionKey: false,
     },
 )
-
 export const ToDoModel = model("ToDo", ToDoSchema)
+
+export type ICreateTodoDTO = Pick<
+    IToDoSchema,
+    "todo" | "description" | "columnId"
+>
+
+export interface IMoveTodoDTO {
+    todoId: string
+    columnId: string
+}
+
+export interface IDeleteTodoDTO {
+    todoId: string
+}

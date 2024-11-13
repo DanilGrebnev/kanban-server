@@ -1,6 +1,11 @@
 import { Schema, model } from "mongoose"
 
-const ColumnsSchema = new Schema(
+interface IColumnsSchema {
+    dashboardId: string
+    columnName: string
+}
+
+const ColumnsSchema = new Schema<IColumnsSchema>(
     {
         /* Id доски, к которой принадлежит колонка */
         dashboardId: String,
@@ -12,3 +17,12 @@ const ColumnsSchema = new Schema(
 )
 
 export const ColumnsModel = model("Columns", ColumnsSchema)
+
+export interface ICreateColumnsDTO {
+    dashboardId: string
+    columnName: string
+}
+
+export interface IDeleteColumnsDTO {
+    columnId: string
+}

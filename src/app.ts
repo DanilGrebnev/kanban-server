@@ -1,9 +1,9 @@
 import "module-alias/register"
 import { dashboardController } from "@/entities/dashboards"
-import { CreateExpressApp } from "./lib/createExpressApp.js"
+import { CreateExpressApp } from "./lib/createExpressApp"
 import { usersController } from "@/entities/users"
-import { columnsController } from "./entities/columns/columns-controller.js"
-import { todoController } from "./entities/todos/todo-controller.js"
+import { columnsController } from "./entities/columns/columns-controller"
+import { todoController } from "./entities/todos/todo-controller"
 
 import "dotenv/config"
 

@@ -1,7 +1,22 @@
 import { Schema, model } from "mongoose"
-import { IProfile } from "@/entities/users/model/usersTypes"
 
-const UsersSchema = new Schema<IProfile>(
+interface IUsersSchema {
+    name: string
+    password: string
+    login: string
+    dashboardsList: {
+        dashboardId: string
+        dashboardName: string
+        role: UsersRole.OWNER | UsersRole.EMPLOYEE
+    }[]
+}
+
+export enum UsersRole {
+    OWNER = "owner",
+    EMPLOYEE = "employee",
+}
+
+const UsersSchema = new Schema<IUsersSchema>(
     {
         name: String,
         password: String,
@@ -19,3 +34,16 @@ const UsersSchema = new Schema<IProfile>(
 )
 
 export const UsersModel = model("Users", UsersSchema)
+
+export type ICreateUserDTO = Pick<IUsersSchema, "login" | "name" | "password">
+export type ILoginUserDTO = Pick<ICreateUserDTO, "login" | "password">
+export type IRemoveUserFromDashboardDTO = {
+    userId: string
+    dashboardId: string
+}
+export type IJoinUserToDashboardDTO = {
+    userId: string
+    dashboardId: string
+}
+export type IGetDashboardParticipantsDTO = string
+export type IFindUserDTO = { name: string }

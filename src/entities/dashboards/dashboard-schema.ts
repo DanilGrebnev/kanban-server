@@ -1,6 +1,11 @@
 import { Schema, model } from "mongoose"
 
-const DashboardsSchema = new Schema(
+interface IDashboardsSchema {
+    dashboardName: string
+    participants: string[]
+}
+
+const DashboardsSchema = new Schema<IDashboardsSchema>(
     {
         dashboardName: String,
         participants: { type: [String], default: [] },
@@ -11,3 +16,7 @@ const DashboardsSchema = new Schema(
 )
 
 export const DashboardModel = model("Dashboards", DashboardsSchema)
+
+export interface ICreateDashboardDTO {
+    dashboardName: string
+}

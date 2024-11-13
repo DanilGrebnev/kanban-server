@@ -1,13 +1,20 @@
-import { UsersModel } from "./users-schema.js"
+import {
+    ICreateUserDTO,
+    IGetDashboardParticipantsDTO,
+    IJoinUserToDashboardDTO,
+    ILoginUserDTO,
+    IRemoveUserFromDashboardDTO,
+    UsersModel,
+    UsersRole,
+} from "./users-schema.js"
 import { DashboardModel } from "@/entities/dashboards"
-import { UsersRole, IRegister } from "./model/usersTypes"
 import { asyncBcryptHash } from "@/lib/asyncBcryptHash.js"
 import { asyncBcryptCompare } from "@/lib/asyncBcryptCompare.js"
 import { JWTPayloadDecode, parseJwtPayload } from "@/lib/parseJwtPayload.js"
 import { createAuthJwtPayload } from "@/lib/createAuthJwtPayload.js"
 
 class UserServices {
-    create = async (data: IRegister) => {
+    create = async (data: ICreateUserDTO) => {
         const fondedUserByNamePromise = UsersModel.findOne({ name: data.name })
         const fondedUserByLoginPromise = UsersModel.findOne({
             login: data.login,
@@ -45,10 +52,7 @@ class UserServices {
     joinToDashboard = async ({
         dashboardId,
         userId,
-    }: {
-        dashboardId: string
-        userId: string
-    }) => {
+    }: IJoinUserToDashboardDTO) => {
         const [user, dashboard] = await Promise.all([
             UsersModel.findById(userId),
             DashboardModel.findById(dashboardId),
@@ -77,10 +81,7 @@ class UserServices {
     deleteFromDashboard = async ({
         dashboardId,
         userId,
-    }: {
-        dashboardId: string
-        userId: string
-    }) => {
+    }: IRemoveUserFromDashboardDTO) => {
         const [user, dashboard] = await Promise.all([
             UsersModel.findById(userId),
             DashboardModel.findById(dashboardId),
@@ -108,7 +109,7 @@ class UserServices {
         return updatedUser
     }
 
-    login = async (body) => {
+    login = async (body: ILoginUserDTO) => {
         const user = await UsersModel.findOne({ login: body.login }).exec()
 
         if (!user) {
@@ -140,7 +141,7 @@ class UserServices {
         return user
     }
 
-    getDashboardParticipants = (dashboardId: string) => {
+    getDashboardParticipants = (dashboardId: IGetDashboardParticipantsDTO) => {
         return UsersModel.find({
             "dashboardsList.dashboardId": dashboardId,
         })

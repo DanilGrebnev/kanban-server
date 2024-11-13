@@ -1,13 +1,14 @@
-import { DashboardModel } from "./dashboard-schema.js"
+import { DashboardModel, ICreateDashboardDTO } from "./dashboard-schema.js"
 import { UsersModel, UsersRole } from "@/entities/users"
-import { ICreateDashboard } from "@/entities/dashboards/model/dashboardTypes"
 
 class DashboardServices {
     getDashboardsList = async (userId: string) => {
         return DashboardModel.find({ participants: { $in: userId } })
     }
 
-    createDashboard = async (data: ICreateDashboard) => {
+    createDashboard = async (
+        data: ICreateDashboardDTO & { userId: string },
+    ) => {
         const dashboard = new DashboardModel()
         dashboard.dashboardName = data.dashboardName
         dashboard.participants.push(data.userId)

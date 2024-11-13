@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs"
  * @params - payload: данные для хеширования
  * @params - salt - сложность
  * */
-export const asyncBcryptHash = (data) =>
+export const asyncBcryptHash = (data: any) =>
     new Promise((resolve, reject) => {
         bcrypt.genSalt(data.salt, (err, salt) => {
             bcrypt.hash(data.payload, salt, function (err, hash) {
