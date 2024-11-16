@@ -7,6 +7,7 @@ interface IToDoSchema {
     creationDate: Date
     priority: "low" | "middle" | "high"
     author: string
+    commentsAmount: number
     history: {
         authorName: string
         changeDate: Date
@@ -20,6 +21,10 @@ const ToDoSchema = new Schema<IToDoSchema>(
         todo: String,
         description: { type: String, default: "" },
         columnId: String,
+        commentsAmount: {
+            type: Number,
+            default: 0,
+        },
         creationDate: {
             type: Date,
             default: Date.now(),

@@ -11,6 +11,7 @@ export class CommentsServices {
 
     createComments = async (data: ICreateCommentsDTO) => {
         const newComment = new CommentsModel(data)
+
         return newComment.save()
     }
 

@@ -11,6 +11,6 @@ export const parseJwtPayload = (
     try {
         return jwt.verify(jwtPayload, consts.JWT_SECRET) as JWTPayloadDecode
     } catch (err) {
-        return
+        return err
     }
 }

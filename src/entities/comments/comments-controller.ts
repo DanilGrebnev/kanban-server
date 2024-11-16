@@ -7,6 +7,8 @@ import {
 import { commentsServices } from "@/entities/comments/comments-services"
 import { Responses } from "@/shared/response"
 import { authMiddleware } from "@/entities/auth/authMiddleware"
+import { parseJwtPayload } from "@/lib/parseJwtPayload"
+import { toDoServices } from "@/entities/todos"
 
 export const commentsController = Router()
 
@@ -29,9 +31,23 @@ commentsController.get(
 commentsController.post(
     "/",
     authMiddleware,
-    async (req: ReqType<{ body: ICreateCommentsDTO }>, res): Promise<any> => {
+    async (
+        req: ReqType<{ body: ICreateCommentsDTO; cookies: "auth" }>,
+        res,
+    ): Promise<any> => {
         try {
-            const comment = await commentsServices.createComments(req.body)
+            const payload = parseJwtPayload(req.cookies.auth)
+
+            const p1 = commentsServices.createComments({
+                ...req.body,
+                authorId: payload.userId,
+            })
+            const p2 = toDoServices.updateCommentsAmount(
+                req.body.todoId,
+                "increment",
+            )
+            const [comment] = await Promise.all([p1, p2])
+
             return res.status(200).send(comment)
         } catch (err) {
             res.status(400).send(
@@ -43,6 +59,7 @@ commentsController.post(
 
 commentsController.patch(
     "/:commentId",
+    authMiddleware,
     async (
         req: ReqType<{ body: IUpdateCommentsDTO; pathParams: "commentId" }>,
         res,
@@ -64,11 +81,17 @@ commentsController.patch(
 
 commentsController.delete(
     "/:commentsId",
-    async (req: ReqType<{ pathParams: "commentsId" }>, res): Promise<any> => {
+    authMiddleware,
+    async (
+        req: ReqType<{ pathParams: "commentsId"; cookies: "auth" }>,
+        res,
+    ): Promise<any> => {
         try {
             const comment = await commentsServices.deleteComments(
                 req.params.commentsId,
             )
+            toDoServices.updateCommentsAmount(comment.todoId, "decrement")
+
             return res.status(200).send(comment)
         } catch (err) {
             res.status(400).send(

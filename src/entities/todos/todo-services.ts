@@ -19,6 +19,24 @@ class ToDoServices {
         return ToDoModel.findById(todoId)
     }
 
+    updateCommentsAmount = async (
+        todoId: string,
+        action: "increment" | "decrement",
+    ) => {
+        const todo = await ToDoModel.findById(todoId)
+        if (!todo) throw new Error("Задачи не существует")
+
+        switch (action) {
+            case "increment":
+                todo.commentsAmount += 1
+                break
+            case "decrement":
+                todo.commentsAmount -= 1
+        }
+
+        return await todo.save()
+    }
+
     deleteTodo = async (todoId: string) => {
         const [deletedTodo] = await Promise.all([
             ToDoModel.findByIdAndDelete({ _id: todoId }),
