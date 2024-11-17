@@ -10,6 +10,7 @@ class DashboardServices {
         data: ICreateDashboardDTO & { userId: string },
     ) => {
         const dashboard = new DashboardModel()
+
         dashboard.dashboardName = data.dashboardName
         dashboard.participants.push(data.userId)
 

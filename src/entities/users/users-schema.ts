@@ -18,9 +18,18 @@ export enum UsersRole {
 
 const UsersSchema = new Schema<IUsersSchema>(
     {
-        name: String,
-        password: String,
-        login: String,
+        name: {
+            type: String,
+            required: true,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        login: {
+            type: String,
+            required: true,
+        },
         dashboardsList: {
             type: [
                 { dashboardId: String, dashboardName: String, role: String },
