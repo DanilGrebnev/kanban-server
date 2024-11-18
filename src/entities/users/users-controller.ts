@@ -81,10 +81,10 @@ router.post(
 
 router.get(
     "/participants/:dashboardId",
-    async (req: ReqType<{ pathParams: "name" }>, res): Promise<any> => {
+    async (req: ReqType<{ pathParams: "dashboardId" }>, res): Promise<any> => {
         try {
             const users = await userServices.getDashboardParticipants(
-                req.params.name,
+                req.params.dashboardId,
             )
 
             return res.status(200).send(users)

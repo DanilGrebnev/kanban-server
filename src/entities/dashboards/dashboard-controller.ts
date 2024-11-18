@@ -44,7 +44,10 @@ router.get(
 /* Create dashboard */
 router.post(
     "/",
-    async (req: ReqType<{ body: ICreateDashboardDTO }>, res): Promise<any> => {
+    async (
+        req: ReqType<{ body: ICreateDashboardDTO; cookies: "auth" }>,
+        res,
+    ): Promise<any> => {
         try {
             if (!req.cookies.auth) {
                 return res.status(401).send(Responses.NotAuthorization)
