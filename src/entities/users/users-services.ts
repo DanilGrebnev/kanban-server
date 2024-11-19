@@ -1,6 +1,5 @@
 import {
     ICreateUserDTO,
-    IGetDashboardParticipantsDTO,
     IJoinUserToDashboardDTO,
     ILoginUserDTO,
     IRemoveUserFromDashboardDTO,
@@ -141,7 +140,7 @@ class UserServices {
         return user
     }
 
-    getDashboardParticipants = (dashboardId: IGetDashboardParticipantsDTO) => {
+    getDashboardParticipants = (dashboardId: string) => {
         return UsersModel.find({
             "dashboardsList.dashboardId": dashboardId,
         })

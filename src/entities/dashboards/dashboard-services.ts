@@ -1,5 +1,5 @@
 import { DashboardModel, ICreateDashboardDTO } from "./dashboard-schema.js"
-import { UsersModel, UsersRole } from "@/entities/users"
+import { userServices, UsersModel, UsersRole } from "@/entities/users"
 import { columnsServices } from "@/entities/columns"
 
 class DashboardServices {
@@ -40,7 +40,25 @@ class DashboardServices {
     }
 
     deleteDashboard = async (dashboardId: string) => {
-        const deleteColumnsPromise = columnsServices.deleteColumn(dashboardId)
+        const usersInDashboard =
+            await userServices.getDashboardParticipants(dashboardId)
+
+        const deleteColumnsPromise =
+            columnsServices.deleteColumnsByDashboardId(dashboardId)
+
+        const deleteUserFromDashboardPromise = usersInDashboard.map((user) => {
+            return userServices.deleteFromDashboard({
+                dashboardId,
+                userId: user._id as any as string,
+            })
+        })
+
+        await Promise.all([
+            ...deleteUserFromDashboardPromise,
+            deleteColumnsPromise,
+        ])
+
+        return DashboardModel.findByIdAndDelete(dashboardId)
     }
 }
 
