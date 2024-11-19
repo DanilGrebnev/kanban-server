@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose"
+import { commentsServices } from "@/entities/comments"
 
 interface IToDoSchema {
     todo: string
@@ -49,6 +50,29 @@ const ToDoSchema = new Schema<IToDoSchema>(
         versionKey: false,
     },
 )
+
+/* Удаление всех комментариев отнсящихся к задаче при удалении 1 задачи */
+ToDoSchema.pre("deleteOne", async function (next) {
+    try {
+        const todoId = this.getQuery()._id
+        await commentsServices.deleteCommentsByTodoId(todoId)
+        return next()
+    } catch (err) {
+        next(err)
+    }
+})
+
+/* Удаление всех комментариев при удалении списка задач */
+ToDoSchema.pre("deleteMany", async function (next) {
+    try {
+        const { columnId } = this.getFilter() as { columnId: string }
+        await commentsServices.deleteCommentsByColumnId(columnId)
+        return next()
+    } catch (err) {
+        next(err)
+    }
+})
+
 export const ToDoModel = model("ToDo", ToDoSchema)
 
 export type ICreateTodoDTO = Pick<

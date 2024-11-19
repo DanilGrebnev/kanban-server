@@ -1,5 +1,4 @@
 import { ColumnsModel, ICreateColumnsDTO } from "./columns-schema"
-import { ToDoModel } from "@/entities/todos"
 
 class ColumnsServices {
     /* Получение всех колонок доски */
@@ -13,13 +12,8 @@ class ColumnsServices {
     }
 
     deleteColumn = async (columnId: string) => {
-        const promiseDeletedTodo = ToDoModel.deleteMany({ columnId })
-        const promiseDeletedColumn = ColumnsModel.findByIdAndDelete(columnId)
+        const deletedColumn = await ColumnsModel.deleteOne({ _id: columnId })
 
-        const [deletedColumn] = await Promise.all([
-            promiseDeletedColumn,
-            promiseDeletedTodo,
-        ])
         return deletedColumn
     }
 }

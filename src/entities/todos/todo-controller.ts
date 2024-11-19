@@ -52,7 +52,7 @@ router.post(
     "/",
     authMiddleware,
     async (
-        req: ReqType<{ body: ICreateTodoDTO }>,
+        req: ReqType<{ body: ICreateTodoDTO; cookies: "auth" }>,
         res: Response,
     ): Promise<any> => {
         try {

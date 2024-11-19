@@ -3,6 +3,7 @@ import {
     type ICreateCommentsDTO,
     IUpdateCommentsDTO,
 } from "./comments-schema"
+import { ToDoModel } from "@/entities/todos"
 
 export class CommentsServices {
     getComments = async (todoId: string) => {
@@ -10,16 +11,28 @@ export class CommentsServices {
     }
 
     createComments = async (data: ICreateCommentsDTO) => {
-        const newComment = new CommentsModel(data)
+        const todo = await ToDoModel.findById(data.todoId)
+        if (!todo) {
+            throw new Error("Ошибка создания комментария")
+        }
+
+        const newComment = new CommentsModel({
+            ...data,
+            columnId: todo.columnId,
+        })
 
         return newComment.save()
     }
 
     deleteComments = async (commentId: string) => {
-        return CommentsModel.findByIdAndDelete(commentId)
+        return CommentsModel.findOneAndDelete({ _id: commentId })
     }
 
-    deleteAllComments = async (todoId: string) => {
+    deleteCommentsByColumnId = async (columnId: string) => {
+        return CommentsModel.deleteMany({ columnId })
+    }
+
+    deleteCommentsByTodoId = async (todoId: string) => {
         return CommentsModel.deleteMany({ todoId }).exec()
     }
 

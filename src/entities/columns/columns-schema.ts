@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose"
+import { toDoServices } from "@/entities/todos"
 
 interface IColumnsSchema {
     dashboardId: string
@@ -15,6 +16,16 @@ const ColumnsSchema = new Schema<IColumnsSchema>(
         versionKey: false,
     },
 )
+
+ColumnsSchema.pre("deleteOne", async function (next) {
+    try {
+        const columnId = this.getQuery()._id
+        await toDoServices.deleteAllTodo(columnId)
+        next()
+    } catch (err) {
+        next(err)
+    }
+})
 
 export const ColumnsModel = model("Columns", ColumnsSchema)
 

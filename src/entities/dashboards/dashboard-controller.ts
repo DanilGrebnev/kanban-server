@@ -68,4 +68,19 @@ router.post(
     },
 )
 
+router.delete(
+    "/:dashboardId",
+    authMiddleware,
+    async (req: ReqType<{ pathParams: "dashboardId" }>, res) => {
+        try {
+            const dashboardId = req.params.dashboardId
+            const deletedDashboard =
+                await dashboardServices.deleteDashboard(dashboardId)
+            res.status(200).send(deletedDashboard)
+        } catch (err) {
+            res.status(400).send(Responses.message("Ошибка удаления доски"))
+        }
+    },
+)
+
 export const dashboardController = router

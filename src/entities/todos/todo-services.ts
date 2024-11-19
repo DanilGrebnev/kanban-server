@@ -1,6 +1,5 @@
 import { ICreateTodoDTO, IMoveTodoDTO, ToDoModel } from "./todo-schema"
 import { UsersModel } from "@/entities/users"
-import { commentsServices } from "@/entities/comments"
 
 class ToDoServices {
     createTodo = async (data: ICreateTodoDTO & { authorId: string }) => {
@@ -38,12 +37,14 @@ class ToDoServices {
     }
 
     deleteTodo = async (todoId: string) => {
-        const [deletedTodo] = await Promise.all([
-            ToDoModel.findByIdAndDelete({ _id: todoId }),
-            commentsServices.deleteAllComments(todoId),
-        ])
-
+        // const deletedTodo = await ToDoModel.deleteOne({ _id: todoId })
+        const deletedTodo = await ToDoModel.deleteOne({ _id: todoId })
         return deletedTodo
+    }
+
+    /* Удаление всех todo по идентификатору колонки */
+    deleteAllTodo = async (columnId: string) => {
+        return ToDoModel.deleteMany({ columnId })
     }
 
     moveToAnotherColumn = async ({ columnId, todoId }: IMoveTodoDTO) => {

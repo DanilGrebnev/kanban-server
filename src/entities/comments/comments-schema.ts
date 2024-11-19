@@ -7,6 +7,7 @@ interface ICommentsSchema {
     replyTo: string
     authorId: string
     text: string
+    columnId: string
     replyInfo: {
         authorName: string
         authorId: string
@@ -31,6 +32,7 @@ const CommentsSchema = new Schema<ICommentsSchema>(
         todoId: String,
         authorId: String,
         text: String,
+        columnId: String,
         replyInfo: {
             type: replySchema,
             default: null,
