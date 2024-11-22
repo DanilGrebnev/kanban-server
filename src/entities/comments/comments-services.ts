@@ -6,7 +6,7 @@ import {
 import { ToDoModel } from "@/entities/todos"
 
 export class CommentsServices {
-    getComments = async (todoId: string) => {
+    getCommentsByTodoId = async (todoId: string) => {
         return CommentsModel.find({ todoId })
     }
 
@@ -34,6 +34,10 @@ export class CommentsServices {
 
     deleteCommentsByTodoId = async (todoId: string) => {
         return CommentsModel.deleteMany({ todoId }).exec()
+    }
+
+    getCommentsDetail = async (commentsId: string) => {
+        return CommentsModel.findById(commentsId)
     }
 
     updateComment = async ({

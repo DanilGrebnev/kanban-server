@@ -16,13 +16,29 @@ commentsController.get(
     "/:todoId",
     async (req: ReqType<{ pathParams: "todoId" }>, res): Promise<any> => {
         try {
-            const comments = await commentsServices.getComments(
+            const comments = await commentsServices.getCommentsByTodoId(
                 req.params.todoId,
             )
             return res.status(200).send(comments)
         } catch (err) {
             res.status(400).send(
                 Responses.message("Ошибка получения постов", err.message),
+            )
+        }
+    },
+)
+
+commentsController.get(
+    "/detail/:commentsId",
+    async (req: ReqType<{ pathParams: "commentsId" }>, res): Promise<any> => {
+        try {
+            const comment = await commentsServices.getCommentsDetail(
+                req.params.commentsId,
+            )
+            return res.status(200).send(comment)
+        } catch (err) {
+            res.status(400).send(
+                Responses.message("Ошибка получения комментария", err.message),
             )
         }
     },

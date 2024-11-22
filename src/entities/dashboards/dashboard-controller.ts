@@ -28,7 +28,6 @@ router.get("/", authMiddleware, async (req: Request, res): Promise<any> => {
 
 router.get(
     "/:dashboardId",
-    authMiddleware,
     async (req: ReqType<{ pathParams: "dashboardId" }>, res): Promise<any> => {
         try {
             const dashboard = await dashboardServices.getDashboardDetail(

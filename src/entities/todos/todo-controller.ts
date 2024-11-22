@@ -8,6 +8,7 @@ import {
     ICreateTodoDTO,
     IMoveTodoDTO,
     IDeleteTodoDTO,
+    IChangeTodoDTO,
 } from "@/entities/todos/todo-schema"
 
 const router = Router()
@@ -87,6 +88,31 @@ router.post(
             return res
                 .status(400)
                 .send(Responses.message("Ошибка перемещения задачи"))
+        }
+    },
+)
+
+router.put(
+    "/:todoId",
+    authMiddleware,
+    async (
+        req: ReqType<{
+            pathParams: "todoId"
+            body: IChangeTodoDTO
+        }>,
+        res,
+    ) => {
+        try {
+            const updatedTodo = await toDoServices.updateTodo(
+                req.params.todoId,
+                req.body,
+            )
+
+            res.status(200).send(updatedTodo)
+        } catch (err) {
+            res.status(400).send(
+                Responses.message("Ошибка обновления задача", err.message),
+            )
         }
     },
 )

@@ -1,4 +1,9 @@
-import { ICreateTodoDTO, IMoveTodoDTO, ToDoModel } from "./todo-schema"
+import {
+    IChangeTodoDTO,
+    ICreateTodoDTO,
+    IMoveTodoDTO,
+    ToDoModel,
+} from "./todo-schema"
 import { UsersModel } from "@/entities/users"
 
 class ToDoServices {
@@ -16,6 +21,10 @@ class ToDoServices {
 
     getTodoDetail = async (todoId: string) => {
         return ToDoModel.findById(todoId)
+    }
+
+    updateTodo = async (todoId: string, todo: IChangeTodoDTO) => {
+        return ToDoModel.findByIdAndUpdate(todoId, todo)
     }
 
     updateCommentsAmount = async (
@@ -37,7 +46,6 @@ class ToDoServices {
     }
 
     deleteTodo = async (todoId: string) => {
-        // const deletedTodo = await ToDoModel.deleteOne({ _id: todoId })
         const deletedTodo = await ToDoModel.deleteOne({ _id: todoId })
         return deletedTodo
     }
@@ -46,7 +54,7 @@ class ToDoServices {
     deleteAllTodo = async (columnId: string) => {
         return ToDoModel.deleteMany({ columnId })
     }
-
+    /* Перемещение задачи из одной колонки в другую */
     moveToAnotherColumn = async ({ columnId, todoId }: IMoveTodoDTO) => {
         return ToDoModel.findByIdAndUpdate(todoId, { columnId })
     }

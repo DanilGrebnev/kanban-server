@@ -1,12 +1,14 @@
 import { Schema, model } from "mongoose"
 import { commentsServices } from "@/entities/comments"
 
+type TodoPriority = "low" | "middle" | "high"
+
 interface IToDoSchema {
     todo: string
     description: string
     columnId: string
     creationDate: Date
-    priority: "low" | "middle" | "high"
+    priority: TodoPriority
     author: string
     commentsAmount: number
     history: {
@@ -20,7 +22,10 @@ const ToDoSchema = new Schema<IToDoSchema>(
     {
         /* Заголовок задачи */
         todo: String,
-        description: { type: String, default: "" },
+        description: {
+            type: String,
+            default: "",
+        },
         columnId: String,
         commentsAmount: {
             type: Number,
@@ -77,8 +82,10 @@ export const ToDoModel = model("ToDo", ToDoSchema)
 
 export type ICreateTodoDTO = Pick<
     IToDoSchema,
-    "todo" | "description" | "columnId"
+    "todo" | "description" | "columnId" | "priority"
 >
+
+export type IChangeTodoDTO = Omit<ICreateTodoDTO, "columnId">
 
 export interface IMoveTodoDTO {
     todoId: string
