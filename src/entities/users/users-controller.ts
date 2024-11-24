@@ -14,6 +14,30 @@ import {
 
 const router = Router()
 
+router.get("/profile", authMiddleware, async (req, res) => {
+    try {
+        const user = await userServices.getProfile(req.cookies.auth)
+        res.status(200).send(user)
+    } catch (err) {
+        res.status(401).send(Responses.message(err))
+    }
+})
+
+router.get(
+    "/participants/:dashboardId",
+    async (req: ReqType<{ pathParams: "dashboardId" }>, res): Promise<any> => {
+        try {
+            const users = await userServices.getDashboardParticipants(
+                req.params.dashboardId,
+            )
+
+            return res.status(200).send(users)
+        } catch (err) {
+            return res.send({ err })
+        }
+    },
+)
+
 router.post(
     "/registration",
     async (req: ReqType<{ body: ICreateUserDTO }>, res): Promise<any> => {
@@ -80,21 +104,6 @@ router.post(
     },
 )
 
-router.get(
-    "/participants/:dashboardId",
-    async (req: ReqType<{ pathParams: "dashboardId" }>, res): Promise<any> => {
-        try {
-            const users = await userServices.getDashboardParticipants(
-                req.params.dashboardId,
-            )
-
-            return res.status(200).send(users)
-        } catch (err) {
-            return res.send({ err })
-        }
-    },
-)
-
 router.post(
     "/login",
     async (req: ReqType<{ body: ILoginUserDTO }>, res): Promise<any> => {
@@ -137,14 +146,5 @@ router.delete(
         }
     },
 )
-
-router.get("/profile", async (req, res) => {
-    try {
-        const user = await userServices.getProfile(req.cookies.auth)
-        res.status(200).send(user)
-    } catch (err) {
-        res.status(401).send(Responses.message(err))
-    }
-})
 
 export const usersController = router
