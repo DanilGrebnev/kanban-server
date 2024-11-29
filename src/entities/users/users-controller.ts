@@ -49,7 +49,6 @@ router.post(
             return res
                 .cookie("auth", jwtUserId, {
                     httpOnly: true,
-                    maxAge: Number(process.env.COOKIE_MAX_AGE),
                 })
                 .status(200)
                 .send(Responses.message("Регистрация успешна", user))
@@ -113,7 +112,6 @@ router.post(
             return res
                 .cookie("auth", jwtUserId, {
                     httpOnly: true,
-                    maxAge: Number(process.env.COOKIE_MAX_AGE),
                 })
                 .status(200)
                 .send(Responses.message("Авторизация успешна"))
