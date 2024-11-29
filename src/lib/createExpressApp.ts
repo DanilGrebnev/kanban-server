@@ -5,26 +5,36 @@ import cookieParser from "cookie-parser"
 import { consts } from "@/shared/consts.js"
 import "dotenv/config"
 import { Express } from "express"
-const expressApp = express()
+
+interface IConnectDbOptions {
+    uri: string
+}
+
+interface ICreateExpressAppArgs {
+    port: number
+    corsOptions: Parameters<typeof cors>[0]
+}
 
 export class CreateExpressApp {
-    app: Express
-    port: number
-    constructor({ port, corsOptions }) {
+    private readonly app: Express
+    private readonly port: number
+
+    constructor({ port, corsOptions }: ICreateExpressAppArgs) {
         this.port = port
-        this.app = expressApp
-        this.app
-            .use(cors(corsOptions))
-            .use(express.json())
-            .use(cookieParser(consts.COOKIE_KEY))
+        this.app = express()
+        this.app.use(express.json()).use(cookieParser(consts.COOKIE_KEY))
+
+        if (corsOptions) {
+            this.app.use(cors(corsOptions))
+        }
     }
 
-    use = (...middleware) => {
+    use = (...middleware: any[]) => {
         this.app.use(...middleware)
         return this
     }
 
-    connectToMongoDB = ({ uri }) => {
+    connectToDB = ({ uri }: IConnectDbOptions) => {
         try {
             mongoose.connect(uri)
             console.log("Success connect to MongoDB")
@@ -35,6 +45,7 @@ export class CreateExpressApp {
             return this
         }
     }
+
     create = (cb?: (...args: any[]) => any) => {
         try {
             this.app.listen(this.port, cb?.())

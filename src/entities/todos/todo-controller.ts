@@ -136,4 +136,4 @@ router.delete(
     },
 )
 
-export const todoController = router
+export const todoController = ["/todos", router]

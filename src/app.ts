@@ -5,13 +5,11 @@ import { usersController } from "@/entities/users"
 import { columnsController } from "@/entities/columns"
 import { todoController } from "@/entities/todos"
 import { commentsController } from "@/entities/comments"
-
+import { consts } from "@/shared/consts"
 import "dotenv/config"
 
-const port = 3001
-const uri = "mongodb://localhost:27017/kanban"
 const app = new CreateExpressApp({
-    port,
+    port: consts.PORT || 3001,
     corsOptions: {
         origin: "http://localhost:3000",
         credentials: true,
@@ -19,10 +17,10 @@ const app = new CreateExpressApp({
     },
 })
 
-app.use("/users", usersController)
-    .use("/dashboards", dashboardController)
-    .use("/columns", columnsController)
-    .use("/todos", todoController)
-    .use("/comments", commentsController)
+app.use(...usersController)
+    .use(...dashboardController)
+    .use(...columnsController)
+    .use(...todoController)
+    .use(...commentsController)
     .create()
-    .connectToMongoDB({ uri })
+    .connectToDB({ uri: consts.DB_URL })

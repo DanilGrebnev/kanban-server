@@ -82,4 +82,4 @@ router.delete(
     },
 )
 
-export const dashboardController = router
+export const dashboardController = ["/dashboards", router]

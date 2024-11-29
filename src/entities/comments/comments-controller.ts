@@ -10,9 +10,9 @@ import { authMiddleware } from "@/entities/auth/authMiddleware"
 import { parseJwtPayload } from "@/lib/parseJwtPayload"
 import { toDoServices } from "@/entities/todos"
 
-export const commentsController = Router()
+const router = Router()
 
-commentsController.get(
+router.get(
     "/:todoId",
     async (req: ReqType<{ pathParams: "todoId" }>, res): Promise<any> => {
         try {
@@ -28,7 +28,7 @@ commentsController.get(
     },
 )
 
-commentsController.get(
+router.get(
     "/detail/:commentsId",
     async (req: ReqType<{ pathParams: "commentsId" }>, res): Promise<any> => {
         try {
@@ -44,7 +44,7 @@ commentsController.get(
     },
 )
 
-commentsController.post(
+router.post(
     "/",
     authMiddleware,
     async (
@@ -73,7 +73,7 @@ commentsController.post(
     },
 )
 
-commentsController.patch(
+router.patch(
     "/:commentId",
     authMiddleware,
     async (
@@ -95,7 +95,7 @@ commentsController.patch(
     },
 )
 
-commentsController.delete(
+router.delete(
     "/:commentsId",
     authMiddleware,
     async (
@@ -116,3 +116,5 @@ commentsController.delete(
         }
     },
 )
+
+export const commentsController = ["/comments", router]

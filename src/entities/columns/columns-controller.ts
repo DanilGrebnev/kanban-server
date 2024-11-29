@@ -60,4 +60,4 @@ router.delete(
     },
 )
 
-export const columnsController = router
+export const columnsController = ["/columns", router]

@@ -145,4 +145,4 @@ router.delete(
     },
 )
 
-export const usersController = router
+export const usersController = ["/users", router]
