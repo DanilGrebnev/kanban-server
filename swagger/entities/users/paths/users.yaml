@@ -1,0 +1,16 @@
+post:
+  summary: Login to account
+  tags:
+    - users
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/login-schema.yaml'
+  responses:
+    '200':
+      description: Expected response to a valid request
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/login-schema.yaml"

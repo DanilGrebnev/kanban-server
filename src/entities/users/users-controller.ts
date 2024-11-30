@@ -10,7 +10,7 @@ import {
     IJoinUserToDashboardDTO,
     ILoginUserDTO,
     IRemoveUserFromDashboardDTO,
-} from "@/entities/users/users-schema"
+} from "./users-schema"
 
 const router = Router()
 

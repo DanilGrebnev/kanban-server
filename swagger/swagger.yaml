@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info:
+  title: Swagger Canban - OpenAPI 3.0
+  version: '1'
+tags:
+  - name: user
+    description: Operations about user
+paths:
+  /users:
+    $ref: './entities/users/paths/users.yaml'
+  /users/profile:
+    $ref: './entities/users/paths/users-profile.yaml'
+  /users/search:
+    $ref: './entities/users/paths/users-search.yaml'
+  /users/participants/{dashboardId}:
+    $ref: './entities/users/paths/users-participants-{dashboardId}.yaml'
+  /users/registration:
+    $ref: './entities/users/paths/users-registration.yaml'
+  /users/join:
+    $ref: './entities/users/paths/users-join.yaml'

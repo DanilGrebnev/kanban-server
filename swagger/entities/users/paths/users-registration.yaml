@@ -1,0 +1,16 @@
+post:
+  tags:
+    - users
+  requestBody:
+    description: Registration payload
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/registration-schema.yaml'
+  responses:
+    "200":
+      description: Success response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/success-response-schema.yaml'

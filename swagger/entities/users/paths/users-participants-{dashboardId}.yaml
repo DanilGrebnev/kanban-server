@@ -1,0 +1,17 @@
+get:
+  summary: Get dashboard participants
+  tags:
+    - users
+  parameters:
+    - name: dashboardId
+      in: path
+      description: dashboard id
+  responses:
+    "200":
+      description: Finded users list
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../schemas/profile-schema.yaml'

@@ -1,0 +1,16 @@
+post:
+  tags:
+    - users
+  summary: Join user to dashboard
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/users-join-schema.yaml'
+  responses:
+    "200":
+      description: Success response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/success-response-schema.yaml'

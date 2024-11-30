@@ -1,0 +1,10 @@
+get:
+  tags:
+    - users
+  responses:
+    "200":
+      description: Get profile account
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/profile-schema.yaml'

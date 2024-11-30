@@ -1,0 +1,10 @@
+type: array
+items:
+  type: object
+  properties:
+    dashboardId:
+      type: string
+    dashboardName:
+      type: string
+    role:
+      type: string

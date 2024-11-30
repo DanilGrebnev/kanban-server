@@ -1,0 +1,11 @@
+type: object
+required:
+  - login
+  - password
+properties:
+  login:
+    type: string
+    example: grebnevdanil60@gmail.com
+  password:
+    type: string
+    example: 1234

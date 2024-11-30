@@ -1,0 +1,19 @@
+get:
+  tags:
+    - users
+  parameters:
+    - name: name
+      in: query
+      description: User name
+      required: true
+      schema:
+        type: string
+  responses:
+    "200":
+      description: Search users
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../schemas/profile-schema.yaml'
