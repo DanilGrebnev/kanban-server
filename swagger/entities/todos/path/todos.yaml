@@ -6,7 +6,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../schemas/todo/create-todo-body.yaml'
+          $ref: '../schemas/todos/create-todo-body.yaml'
   responses:
     200:
       description: Success response
@@ -22,7 +22,7 @@ delete:
     content:
       application/json:
         schema:
-          $ref: '../schemas/todo/delete-todo-body.yaml'
+          $ref: '../schemas/todos/delete-todo-body.yaml'
   responses:
     200:
       description: Success response
