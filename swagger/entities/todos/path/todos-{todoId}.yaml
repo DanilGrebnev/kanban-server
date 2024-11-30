@@ -1,0 +1,19 @@
+put:
+  tags:
+    - todos
+  summary: Change todo detail
+  parameters:
+    - name: todoId
+      in: path
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/todos-todoId/change-todo-body.yaml'
+  responses:
+    200:
+      description: Success change todo
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/success-response-schema.yaml'

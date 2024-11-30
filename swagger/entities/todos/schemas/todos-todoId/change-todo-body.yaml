@@ -1,0 +1,8 @@
+type: object
+properties:
+  todo:
+    type: string
+  description:
+    type: string
+  priority:
+    type: string

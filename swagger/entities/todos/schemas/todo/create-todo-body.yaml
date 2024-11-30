@@ -1,0 +1,10 @@
+type: object
+properties:
+  todo:
+    type: string
+  description:
+    type: string
+  columnId:
+    type: string
+  priority:
+    type: string

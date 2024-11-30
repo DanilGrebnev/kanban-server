@@ -1,0 +1,6 @@
+type: object
+properties:
+  todoId:
+    type: string
+  columnId:
+    type: string

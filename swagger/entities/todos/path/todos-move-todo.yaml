@@ -1,0 +1,16 @@
+post:
+  summary: Move todo on other column
+  tags:
+    - todos
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/todos-move-todo/move-todos-body.yaml'
+  responses:
+    200:
+      description: Success response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/success-response-schema.yaml'

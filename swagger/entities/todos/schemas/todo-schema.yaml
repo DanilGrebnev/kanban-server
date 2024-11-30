@@ -1,0 +1,23 @@
+type: object
+properties:
+  _id:
+    type: string
+  todo:
+    type: string
+  description:
+    type: string
+  columnId:
+     type: string
+  creationDate:
+    type: string
+    format: date
+  priority:
+    type: string
+  author:
+    type: string
+  commentsAmount:
+    type: number
+  history:
+    type: array
+    items:
+      $ref: '../schemas/todo-history-schema.yaml'

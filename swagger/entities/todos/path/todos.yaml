@@ -1,0 +1,32 @@
+post:
+  summary: Create todo
+  tags:
+    - todos
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/todo/create-todo-body.yaml'
+  responses:
+    200:
+      description: Success response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/success-response-schema.yaml'
+delete:
+  summary: Delete todo
+  tags:
+    - todos
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/todo/delete-todo-body.yaml'
+  responses:
+    200:
+      description: Success response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/success-response-schema.yaml'

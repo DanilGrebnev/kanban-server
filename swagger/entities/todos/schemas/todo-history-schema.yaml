@@ -1,0 +1,9 @@
+type: object
+properties:
+  authorName:
+    type: string
+  changeDate:
+    type: string
+    format: date
+  authorId:
+    type: string

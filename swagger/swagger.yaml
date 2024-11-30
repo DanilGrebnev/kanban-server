@@ -31,3 +31,15 @@ paths:
   # COLUMNS
   /columns:
     $ref: './entities/columns/path/columns.yaml'
+
+# TODOS
+  /todos:
+    $ref: './entities/todos/path/todos.yaml'
+  /todos/{todoId}:
+    $ref: './entities/todos/path/todos-{todoId}.yaml'
+  /todos/{columnId}:
+    $ref: './entities/todos/path/todos-{columnId}.yaml'
+  /todos/detail/{todoId}:
+    $ref: './entities/todos/path/todos-detail.yaml'
+  /todos/move-todo:
+    $ref: './entities/todos/path/todos-move-todo.yaml'

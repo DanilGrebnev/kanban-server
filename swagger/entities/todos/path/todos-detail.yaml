@@ -1,0 +1,14 @@
+get:
+  summary: Get detail todo information
+  tags:
+    - todos
+  parameters:
+    - name: todoId
+      in: path
+  responses:
+    200:
+      description: Success response
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/todo-schema.yaml'

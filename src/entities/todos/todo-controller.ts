@@ -73,6 +73,25 @@ router.post(
     },
 )
 
+/* Delete todos */
+router.delete(
+    "/",
+    authMiddleware,
+    async (
+        req: ReqType<{ body: IDeleteTodoDTO }>,
+        res: Response,
+    ): Promise<any> => {
+        try {
+            const response = await toDoServices.deleteTodo(req.body.todoId)
+            return res.status(200).send(response)
+        } catch (err) {
+            return res
+                .status(400)
+                .send(Responses.message("Ошибка удаления задачи"))
+        }
+    },
+)
+
 /* Перемещение задачи в другую колонку */
 router.post(
     "/move-todo",
@@ -113,25 +132,6 @@ router.put(
             res.status(400).send(
                 Responses.message("Ошибка обновления задача", err.message),
             )
-        }
-    },
-)
-
-/* Delete todos */
-router.delete(
-    "/",
-    authMiddleware,
-    async (
-        req: ReqType<{ body: IDeleteTodoDTO }>,
-        res: Response,
-    ): Promise<any> => {
-        try {
-            const response = await toDoServices.deleteTodo(req.body.todoId)
-            return res.status(200).send(response)
-        } catch (err) {
-            return res
-                .status(400)
-                .send(Responses.message("Ошибка удаления задачи"))
         }
     },
 )
