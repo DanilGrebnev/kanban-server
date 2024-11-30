@@ -12,38 +12,6 @@ import { toDoServices } from "@/entities/todos"
 
 const router = Router()
 
-router.get(
-    "/:todoId",
-    async (req: ReqType<{ pathParams: "todoId" }>, res): Promise<any> => {
-        try {
-            const comments = await commentsServices.getCommentsByTodoId(
-                req.params.todoId,
-            )
-            return res.status(200).send(comments)
-        } catch (err) {
-            res.status(400).send(
-                Responses.message("Ошибка получения постов", err.message),
-            )
-        }
-    },
-)
-
-router.get(
-    "/detail/:commentsId",
-    async (req: ReqType<{ pathParams: "commentsId" }>, res): Promise<any> => {
-        try {
-            const comment = await commentsServices.getCommentsDetail(
-                req.params.commentsId,
-            )
-            return res.status(200).send(comment)
-        } catch (err) {
-            res.status(400).send(
-                Responses.message("Ошибка получения комментария", err.message),
-            )
-        }
-    },
-)
-
 router.post(
     "/",
     authMiddleware,
@@ -73,6 +41,22 @@ router.post(
     },
 )
 
+router.get(
+    "/:todoId",
+    async (req: ReqType<{ pathParams: "todoId" }>, res): Promise<any> => {
+        try {
+            const comments = await commentsServices.getCommentsByTodoId(
+                req.params.todoId,
+            )
+            return res.status(200).send(comments)
+        } catch (err) {
+            res.status(400).send(
+                Responses.message("Ошибка получения постов", err.message),
+            )
+        }
+    },
+)
+
 router.patch(
     "/:commentId",
     authMiddleware,
@@ -96,15 +80,15 @@ router.patch(
 )
 
 router.delete(
-    "/:commentsId",
+    "/:commentId",
     authMiddleware,
     async (
-        req: ReqType<{ pathParams: "commentsId"; cookies: "auth" }>,
+        req: ReqType<{ pathParams: "commentId"; cookies: "auth" }>,
         res,
     ): Promise<any> => {
         try {
             const comment = await commentsServices.deleteComments(
-                req.params.commentsId,
+                req.params.commentId,
             )
             toDoServices.updateCommentsAmount(comment.todoId, "decrement")
 
@@ -112,6 +96,22 @@ router.delete(
         } catch (err) {
             res.status(400).send(
                 Responses.message("Ошибка удаления комментария", err.message),
+            )
+        }
+    },
+)
+
+router.get(
+    "/detail/:commentsId",
+    async (req: ReqType<{ pathParams: "commentsId" }>, res): Promise<any> => {
+        try {
+            const comment = await commentsServices.getCommentsDetail(
+                req.params.commentsId,
+            )
+            return res.status(200).send(comment)
+        } catch (err) {
+            res.status(400).send(
+                Responses.message("Ошибка получения комментария", err.message),
             )
         }
     },

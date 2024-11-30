@@ -1,0 +1,6 @@
+type: object
+properties:
+  authorName:
+    type: string
+  authorId:
+    type: string

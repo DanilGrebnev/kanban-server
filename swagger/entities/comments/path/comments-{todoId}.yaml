@@ -1,0 +1,17 @@
+get:
+  tags:
+    - comments
+  summary: Get comments list by todo id
+  parameters:
+    - name: todoId
+      in: path
+      required: false
+  responses:
+    200:
+      description: Comments list
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../schemas/comments-schema.yaml'

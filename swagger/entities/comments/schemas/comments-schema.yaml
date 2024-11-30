@@ -1,0 +1,20 @@
+type: object
+properties:
+  _id:
+    type: string
+  todoId:
+    type: string
+  text:
+    type: string
+  columnId:
+    type: string
+  replyInfo:
+    $ref: './comments-reply.yaml'
+  createdDate:
+    type: string
+    format: date
+  authorName:
+    type: string
+  replyTo:
+    type: string
+    default: null

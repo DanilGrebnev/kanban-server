@@ -1,0 +1,34 @@
+patch:
+  tags:
+    - comments
+  summary: Update comments
+  parameters:
+    - name: commentId
+      in: path
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/comments-{commentsId}/update-comments-body.yaml'
+  responses:
+    200:
+      description: Success comment update
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/success-response-schema.yaml'
+
+delete:
+  tags:
+    - comments
+  parameters:
+    - name: commentId
+      in: path
+  summary: Delete comment
+  responses:
+    200:
+      description: Success comment delete
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/success-response-schema.yaml'

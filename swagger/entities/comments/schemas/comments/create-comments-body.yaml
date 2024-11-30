@@ -1,0 +1,14 @@
+type: object
+properties:
+  todoId:
+    type: string
+  replyTo:
+    type: string
+  authorId:
+    type: string
+  authorName:
+    type: string
+  text:
+    type: string
+  replyInfo:
+    $ref: '../comments-reply.yaml'

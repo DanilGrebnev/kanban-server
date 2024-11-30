@@ -43,3 +43,14 @@ paths:
     $ref: './entities/todos/path/todos-detail.yaml'
   /todos/move-todo:
     $ref: './entities/todos/path/todos-move-todo.yaml'
+
+# COMMENTS
+  /comments:
+    $ref: './entities/comments/path/comments.yaml'
+  /comments/{todoId}:
+    $ref: './entities/comments/path/comments-{todoId}.yaml'
+  /comments/{commentId}:
+    $ref: './entities/comments/path/comments-{commentId}.yaml'
+  /comments/detail/{commentId}:
+    $ref: './entities/comments/path/comments-detail-{commentsId}.yaml'
+

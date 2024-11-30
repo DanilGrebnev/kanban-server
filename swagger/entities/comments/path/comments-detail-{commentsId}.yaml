@@ -1,0 +1,15 @@
+get:
+  tags:
+    - comments
+  summary: Get detail info by comment
+  parameters:
+    - name: commentId
+      in: path
+      required: true
+  responses:
+    200:
+      description: Success comment info
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/comments-schema.yaml'
