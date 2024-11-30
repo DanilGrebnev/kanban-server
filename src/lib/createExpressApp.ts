@@ -35,15 +35,16 @@ export class CreateExpressApp {
     }
 
     connectToDB = ({ uri }: IConnectDbOptions) => {
-        try {
-            mongoose.connect(uri)
-            console.log("Success connect to MongoDB")
-            return this
-        } catch (err) {
-            console.log("Error connect to MongoDB")
-            console.log(err)
-            return this
-        }
+        mongoose
+            .connect(uri)
+            .then(() => {
+                console.log("Success connect to MongoDB")
+            })
+            .catch((err) => {
+                console.log("Error connect to MongoDB")
+                console.log(err)
+            })
+        return this
     }
 
     create = (cb?: (...args: any[]) => any) => {
