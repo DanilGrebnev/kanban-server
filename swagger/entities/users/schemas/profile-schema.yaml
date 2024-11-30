@@ -1,5 +1,8 @@
 type: object
 properties:
+  _id:
+    type: string
+    example: 112321
   name:
     type: string
     example: Danil

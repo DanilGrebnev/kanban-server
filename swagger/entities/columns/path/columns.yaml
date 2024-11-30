@@ -1,0 +1,47 @@
+get:
+  tags:
+    - columns
+  descriptions: Get columns list by dashboardId
+  parameters:
+    - name: dashboardId
+      in: path
+  responses:
+    200:
+      description: Success response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../schemas/columns-schema.yaml'
+
+post:
+  tags:
+    - columns
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/create-column/create-column-body.yaml'
+  responses:
+    200:
+      description: Success response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/success-response-schema.yaml'
+delete:
+  tags:
+    - columns
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/delete-column/delete-column-body.yaml'
+  responses:
+    200:
+      description: Success response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/success-response-schema.yaml'

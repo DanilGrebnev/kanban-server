@@ -1,0 +1,8 @@
+type: object
+properties:
+  dashboardId:
+    type: string
+    example: 12123123
+  columnName:
+    type: string
+    example: В очереди

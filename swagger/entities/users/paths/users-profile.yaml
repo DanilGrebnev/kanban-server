@@ -1,6 +1,7 @@
 get:
   tags:
     - users
+  summary: Get user profile
   responses:
     "200":
       description: Get profile account

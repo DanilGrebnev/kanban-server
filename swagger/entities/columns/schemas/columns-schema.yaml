@@ -1,0 +1,11 @@
+type: object
+properties:
+  _id:
+    type: string
+    example: 123123
+  columnName:
+    type: string
+    example: Задача
+  dashboardId:
+    type: string
+    example: 13312

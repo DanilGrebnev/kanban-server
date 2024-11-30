@@ -1,0 +1,5 @@
+type: object
+properties:
+  columnId:
+    type: string
+    example: 12312
