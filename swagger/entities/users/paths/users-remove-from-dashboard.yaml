@@ -1,16 +1,16 @@
 post:
-  summary: Login to account
+  summary: Delete user from dashboard
   tags:
     - users
   requestBody:
     content:
       application/json:
         schema:
-          $ref: '../schemas/login-schema.yaml'
+          $ref: '../schemas/users-remove-from-dashboard/body-schema.yaml'
   responses:
     '200':
       description: Success response
       content:
         application/json:
           schema:
-            $ref: "../schemas/login-schema.yaml"
+            $ref: '../../../responses-schemas/success-response-schema.yaml'

@@ -6,6 +6,8 @@ import { columnsController } from "@/entities/columns"
 import { todoController } from "@/entities/todos"
 import { commentsController } from "@/entities/comments"
 import { consts } from "@/shared/consts"
+import { swaggerMiddleware } from "@/shared/middleware/swagger-middleware"
+
 import "dotenv/config"
 
 const app = new CreateExpressApp({
@@ -17,7 +19,8 @@ const app = new CreateExpressApp({
     },
 })
 
-app.use(...usersController)
+app.use(swaggerMiddleware)
+    .use(...usersController)
     .use(...dashboardController)
     .use(...columnsController)
     .use(...todoController)

@@ -46,10 +46,12 @@ export const UsersModel = model("Users", UsersSchema)
 
 export type ICreateUserDTO = Pick<IUsersSchema, "login" | "name" | "password">
 export type ILoginUserDTO = Pick<ICreateUserDTO, "login" | "password">
+
 export type IRemoveUserFromDashboardDTO = {
     userId: string
     dashboardId: string
 }
+
 export type IJoinUserToDashboardDTO = {
     userId: string
     dashboardId: string
