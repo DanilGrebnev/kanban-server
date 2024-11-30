@@ -1,0 +1,5 @@
+type: object
+properties:
+  dashboardName:
+    type: string
+    example: FTKM tasks

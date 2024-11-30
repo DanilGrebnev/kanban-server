@@ -20,3 +20,8 @@ paths:
     $ref: './entities/users/paths/users-join.yaml'
   /users/remove-from-dashboard:
     $ref: './entities/users/paths/users-remove-from-dashboard.yaml'
+  #    DASHBOARDS
+  /dashboards:
+    $ref: './entities/dashboards/paths/dashboards.yaml'
+  /dashboards/{dashboardId}:
+    $ref: './entities/dashboards/paths/dashboards-{dashboardId}.yaml'

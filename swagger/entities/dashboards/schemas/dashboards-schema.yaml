@@ -1,0 +1,13 @@
+type: object
+properties:
+  dashboardName:
+    type: string
+    example: FTKM tasks
+  createdDate:
+    type: string
+    format: date-type
+  participants:
+    type: array
+    description: users id list
+    items:
+      type: string

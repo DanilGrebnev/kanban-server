@@ -1,0 +1,41 @@
+get:
+  tags:
+    - dashboards
+  description: Get dashboards list
+  responses:
+    "200":
+      description: Success response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../schemas/dashboards-schema.yaml'
+    "400":
+      description: Error response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/error-response-schema.yaml'
+post:
+  tags:
+    - dashboards
+  description: Create dashboard
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/dashbooards/create-dashboard-body.yaml'
+  responses:
+    "200":
+      description: Success response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/success-response-schema.yaml'
+    "400":
+      description: Error response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/error-response-schema.yaml'

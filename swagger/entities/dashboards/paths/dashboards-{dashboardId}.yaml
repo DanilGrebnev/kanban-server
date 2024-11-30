@@ -1,0 +1,41 @@
+get:
+  tags:
+    - dashboards
+  description: Get dashboards list
+  parameters:
+    - name: dashboardId
+      in: path
+  responses:
+    "200":
+      description: Success response
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/dashboards-schema.yaml'
+    "400":
+      description: Error response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/error-response-schema.yaml'
+
+delete:
+  tags:
+    - dashboards
+  description: Delete dashboard
+  parameters:
+    - name: dashboardId
+      in: path
+  responses:
+    "200":
+      description: Success response
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/dashboards-schema.yaml'
+    "400":
+      description: Error response
+      content:
+        application/json:
+          schema:
+            $ref: '../../../responses-schemas/error-response-schema.yaml'
