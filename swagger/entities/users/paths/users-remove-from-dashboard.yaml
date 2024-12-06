@@ -1,4 +1,4 @@
-post:
+delete:
   summary: Delete user from dashboard
   tags:
     - users
