@@ -1,0 +1,12 @@
+type: object
+properties:
+  amount:
+    type: number
+    example: 3
+  userId:
+    type: string
+    example: 123123
+  invitationInDashboard:
+    type: array
+    items:
+      $ref: './invitation-in-dashboard-schema.yaml'

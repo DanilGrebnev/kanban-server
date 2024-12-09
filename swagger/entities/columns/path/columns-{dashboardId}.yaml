@@ -1,0 +1,17 @@
+get:
+  tags:
+    - columns
+  summary: Get columns list by dashboardId
+  description: Get columns list by dashboardId
+  parameters:
+    - name: dashboardId
+      in: path
+  responses:
+    200:
+      description: Success response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../schemas/columns-schema.yaml'

@@ -1,0 +1,8 @@
+type: object
+properties:
+  _id:
+    type: string
+    example: 12313
+  dashboardName:
+    type: string
+    example: FTKM app

@@ -1,0 +1,11 @@
+get:
+  summary: Get notifications
+  tags:
+    - notifications
+  responses:
+    '200':
+      description: Success notifications amount list
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/notifications-schema.yaml'

@@ -2,6 +2,7 @@ get:
   tags:
     - dashboards
   description: Get dashboards list
+  summary: Get dashboards list
   responses:
     "200":
       description: Success response
@@ -21,6 +22,7 @@ post:
   tags:
     - dashboards
   description: Create dashboard
+  summary: Create dashboard
   requestBody:
     content:
       application/json:

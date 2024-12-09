@@ -1,7 +1,8 @@
 get:
   tags:
     - dashboards
-  description: Get dashboards list
+  description: Get dashboard detail
+  summary: Get dashboard detail
   parameters:
     - name: dashboardId
       in: path
@@ -23,6 +24,7 @@ delete:
   tags:
     - dashboards
   description: Delete dashboard
+  summary: Delete dashboard by id
   parameters:
     - name: dashboardId
       in: path

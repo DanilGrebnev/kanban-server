@@ -31,6 +31,8 @@ paths:
   # COLUMNS
   /columns:
     $ref: './entities/columns/path/columns.yaml'
+  /columns/{dashboardId}:
+    $ref: './entities/columns/path/columns-{dashboardId}.yaml'
 
 # TODOS
   /todos:
@@ -53,4 +55,8 @@ paths:
     $ref: './entities/comments/path/comments-{commentId}.yaml'
   /comments/detail/{commentId}:
     $ref: './entities/comments/path/comments-detail-{commentsId}.yaml'
+
+# NOTIFICATIONS
+#  /notifications:
+#    $ref: './entities/notifications/paths/notifications.yaml'
 

@@ -1,23 +1,7 @@
-get:
-  tags:
-    - columns
-  descriptions: Get columns list by dashboardId
-  parameters:
-    - name: dashboardId
-      in: path
-  responses:
-    200:
-      description: Success response
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '../schemas/columns-schema.yaml'
-
 post:
   tags:
     - columns
+  summary: Create column
   requestBody:
     content:
       application/json:
@@ -33,6 +17,7 @@ post:
 delete:
   tags:
     - columns
+  summary: Delete column
   requestBody:
     content:
       application/json:
